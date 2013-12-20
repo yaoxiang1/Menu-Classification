@@ -60,18 +60,7 @@ public class menu_category {
 			while ((line = br.readLine()) != null) {
 				count++;
 				String[] MenuInfo = line.split(cvsSplitBy);
-				// MenuInfo[2] is the itemid
-				
-				
-				/////////////////////////////////////////////////////////////////////////////////////
-				// only insert the data if the price of the item is more than $4
-				/////////////////////////////////////////////////////////////////////////////////////
-//				if(hm.get(MenuInfo[2])!=null && hm.get(MenuInfo[2]) > 4){
-				/////////////////////////////////////////////////////////////////////////////////////
-				// Here I am only filter out one restaurant instead of multiple restaurant
-				// 653 perform food, 417
-				// 398 , 120, 869
-				
+
 				if(MenuInfo[0].equals("869") && hm.get(MenuInfo[2])!=null && hm.get(MenuInfo[2]) > 4){
 //				if( hm.get(MenuInfo[2])!=null && hm.get(MenuInfo[2]) > 4 ){
 					if(MenuInfo.length==5){
@@ -117,7 +106,6 @@ public class menu_category {
 				clean_no_space.add(split_with_empty[i].trim().toLowerCase());
 			}
 		}	
-//		System.out.println("clean_no_space: "+clean_no_space);
 		clean_no_space.removeAll(menu_category.word_list);
 		return clean_no_space;
 	}
@@ -141,9 +129,7 @@ public class menu_category {
 	
 
 	public static DBCollection mongo_insert(DB database, String collection, String locationid, String locationname, String orderid, ArrayList<String> array_doc_name, ArrayList<String> array_doc_descript) throws UnknownHostException{
-		///////////////////////////////////////////////////////
 		DBCollection coll =database.getCollection(collection);
-		///////////////////////////////////////////////////////
 		BasicDBObject doc_main = new  BasicDBObject("LocationID",locationid );
 						doc_main.append("LocationName", locationname);
 						doc_main.append("MenuID", orderid);

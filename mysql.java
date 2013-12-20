@@ -28,17 +28,4 @@ public class mysql {
 		return rs;
 	}
 	
-	
-	public static void main(String[] args) throws ClassNotFoundException, SQLException{
-		System.out.println("!!!");
-		mysql db = new mysql("root","mysql*alan","localhost","menudata");
-		ResultSet rs  = db.query("select * from cs_price");
-		while (rs.next()){
-			System.out.print(rs.getObject("itemid")+" ");
-			System.out.println(rs.getObject("price"));
-
-		}
-		System.out.println("!!!");
-//		db.connection.prepareStatement(sql);
-	}
 }

@@ -8,7 +8,6 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 
-// I have black list chicken, so chicken repeat will not have so much affection for the classification
 
 public class Bay_Model_Rest {
 	
@@ -49,6 +48,7 @@ public class Bay_Model_Rest {
 //			System.out.println("---->"+hashmap_with_freq);
 		}
 	}
+	
 	/**
 	 * This method is to access the mongodb an put the string groups into ArrayList
 	 * restaurant_array is the whole array which stores all the words
@@ -87,24 +87,12 @@ public class Bay_Model_Rest {
 		
 			ArrayList<String> location_info_stringlist = mongodb_location_to_arraylist(bdbo_query, info_field);
 			HashMap<String,Double> hm_text_from_restaurat = EngineProcessText.arraylist_to_hashmap(location_info_stringlist);
-			
 			System.out.println("hm_text: " + hm_text_from_restaurat);
-		
 			ArrayList<Double> compare_cat_rate = new ArrayList<Double> ();
-//			ArrayList<Double> exp_cat_rate = new ArrayList<Double> ();
-//			HashMap<String,Double> exp_cat_rate_hm = new HashMap<String,Double> ();
-
-//			double exp_sum = 0;
 
 			for (String cat_file_address : category_file){
 				double total = cal_relativefreq_for_cat( cat_file_address, this.cat_to_hm_ArrayList_for_length.get(cat_file_address), this.cat_to_hm.get(cat_file_address), hm_text_from_restaurat, location_info_stringlist );	
-//				public double cal_relativefreq_for_cat(String file_category,double hm_words_length, HashMap<String, Double> clean_hm_from_text_withoutcommo, HashMap<String,Double> hm_text, ArrayList<String> location_info_stringlist ) throws IOException{
-
-				//### System.out.println(cat_file_address+":" + total);
 				compare_cat_rate.add(total);
-//				double exp_numb = Math.exp(total);
-//				exp_cat_rate.add(exp_numb);
-//				exp_sum += exp_numb;
 
 			}
 			
@@ -112,18 +100,7 @@ public class Bay_Model_Rest {
 			double max_cat_rate = Collections.max(compare_cat_rate);
 			int index_cat_rate = compare_cat_rate.indexOf(max_cat_rate);
 			String chosen_category = category_file.get(index_cat_rate);
-			
-//			double max_cat_rate_exp = Collections.max(exp_cat_rate);
-//			System.out.println("CONFIDENCE: "+ max_cat_rate_exp/exp_sum + " %");
-
-			
-			
-//###			System.out.println("==================================================================");
-//###			 System.out.println(category_file);
-//###			 System.out.println(compare_cat_rate);
 			System.out.println(chosen_category + " " + max_cat_rate);
-			
-//			System.out.println("------------------------------------------------------------------------------");
 			return chosen_category;
 			
 	}
@@ -141,23 +118,12 @@ public class Bay_Model_Rest {
 	 */
 	public double cal_relativefreq_for_cat(String file_category,double hm_words_length, HashMap<String, Double> clean_hm_from_text_withoutcommo, HashMap<String,Double> hm_text, ArrayList<String> location_info_stringlist ) throws IOException{
 		
-		//### System.out.println(file_category+": "+clean_hm_from_text_withoutcommo);
-		//### System.out.println("totalvac: "+hm_words_length);
-		//### System.out.println(location_info_stringlist.size());
-		//### System.out.println(clean_hm_from_text_withoutcommo);
-		///////////////////////////////////////////////////////////////////////
 		double total_added_log_rate = 0 ; 	
 		for(String voc_from_text : hm_text.keySet()){
-			//### System.out.println("------------------------------------------");
 			double voc_from_text_freq = hm_text.get(voc_from_text);	
-			//### System.out.println(voc_from_text);
-			//### System.out.println("# times occur: " + voc_from_text_freq);	
-			//### System.out.println(file_category);
 			double cal_rate1 = onevoc_rela_freq_to_cat(clean_hm_from_text_withoutcommo,hm_words_length, voc_from_text, voc_from_text_freq,location_info_stringlist );
 			total_added_log_rate += cal_rate1;					
 		}			
-		//### System.out.println("........................................................................");
-//		System.out.println(file_category+" : "+total_added_log_rate);
 		return total_added_log_rate;	
 	}
 	
@@ -178,21 +144,15 @@ public class Bay_Model_Rest {
 		double cal_rate;
 		if(hm_from_category.containsKey(vac_from_text)){// add 1
 			freqInCat_for_vocInText = hm_from_category.get(vac_from_text)+ this.smooth_index;
-			//### System.out.println("Freq in cat: " + freqInCat_for_vocInText);
 			double adjust_size = totalVoc_in_HMcategory + (location_info_stringlist.size()/(1/this.smooth_index));
 				rate1 = freqInCat_for_vocInText / adjust_size;
-			//### System.out.println("Pi: "+rate1);
 			cal_rate = voc_from_text_freq * Math.log(rate1) - log_factorial(voc_from_text_freq);
-			//### System.out.println("Final Rate:" + cal_rate);
 		}
 		else{// 0 + 0.01
 			freqInCat_for_vocInText = this.smooth_index;
-			//### System.out.println("Freq in cat: " + freqInCat_for_vocInText);
 			double adjust_size = totalVoc_in_HMcategory + (location_info_stringlist.size()/(1/this.smooth_index));
 			rate1 = freqInCat_for_vocInText / adjust_size;
-			//### System.out.println("Pi: "+rate1);
 			cal_rate = voc_from_text_freq * Math.log(rate1) - log_factorial(voc_from_text_freq);
-			//### System.out.println("Final Rate:" + cal_rate);
 
 		}
 		return cal_rate;
@@ -249,7 +209,6 @@ public class Bay_Model_Rest {
 			String chosen_category = bm.bay_model_choose_cat( bdbo_query,db_info_field_list);
 			System.out.println("FINAL RESULT: "+MenuID_String+" "+chosen_category);
 			System.out.println("----------------------------------------------------------------------------------------------");
-//			db_insert_process.db_one_level_insert(LocationID_String, chosen_category);
 		}
 		
 	}

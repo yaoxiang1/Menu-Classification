@@ -1,8 +1,6 @@
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-
 import org.bson.BSONObject;
-
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -93,9 +91,7 @@ public class mongodb {
 		
 	}
 	
-	
 	/**
-	 * 
 	 * @param key
 	 * @param values
 	 */
@@ -110,29 +106,6 @@ public class mongodb {
 		current_coll.insert(bdbo);
 		
 	}
-	
-	
-	
-	
-	public static void main(String[] args) throws UnknownHostException{
-		mongodb query_db = new mongodb("menudata","","");
-		query_db.set_collection("menu_label");
-		
-		
-		
-//		BasicDBObject bdbo = new BasicDBObject();
-//		DBCursor curser = query_db.db_query(bdbo);
-//		while(curser.hasNext()){
-////			BSONObject dbson = (BSONObject)curser.next();
-////			System.out.println(dbson);
-////			String unique_key = (String)dbson.keySet().toArray()[1];
-////			System.out.print(unique_key + " ");
-////			System.out.println(dbson.get(unique_key));
-//		}
-		
-		
-	}
-	
-	
+
 
 }

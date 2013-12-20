@@ -164,12 +164,12 @@ public class Bay_Model_Rest {
 	 * @return, result
 	 */
 	public static double log_factorial(double n) {
-        double fact = 1; 
-        for (int i = 1; i <= n; i++) {
-            fact += Math.log(i);
-        }
-        return fact;
-    }
+	  double fact = 1; 
+	  for (int i = 1; i <= n; i++) {
+	      fact += Math.log(i);
+	  }
+	  return fact;
+	}
 	
 	
 	
